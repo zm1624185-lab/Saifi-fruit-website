@@ -6,466 +6,61 @@
     <title>Saifi Fruit Merchant - Fresh Fruits Hyderabad</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fad0c4 100%);
-        }
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        /* Admin Lock - FIXED */
-        .admin-lock {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0,0,0,0.95);
-            z-index: 9999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            color: white;
-        }
-        .admin-lock.active {
-            display: flex !important;
-        }
-        .admin-lock h2 {
-            color: #4CAF50;
-            margin-bottom: 20px;
-            font-size: 2.5em;
-            text-align: center;
-        }
-        .admin-lock input {
-            padding: 20px 30px;
-            font-size: 1.5em;
-            border: 3px solid #4CAF50;
-            border-radius: 15px;
-            width: 400px;
-            max-width: 90vw;
-            margin-bottom: 25px;
-            text-align: center;
-            font-weight: bold;
-        }
-        .admin-lock button {
-            background: linear-gradient(45deg, #4CAF50, #66BB6A);
-            color: white;
-            border: none;
-            padding: 20px 40px;
-            border-radius: 15px;
-            cursor: pointer;
-            font-size: 1.3em;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        .admin-lock button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(76,175,80,0.5);
-        }
-        
-        /* Admin Toggle Button - FIXED */
-        .admin-toggle {
-            position: fixed;
-            top: 25px;
-            right: 25px;
-            background: linear-gradient(45deg, #ff9800, #ff6b35);
-            color: white;
-            border: none;
-            padding: 18px 28px;
-            border-radius: 35px;
-            cursor: pointer;
-            font-weight: bold;
-            z-index: 10000;
-            box-shadow: 0 10px 30px rgba(255,152,0,0.5);
-            transition: all 0.3s;
-            font-size: 1.1em;
-        }
-        .admin-toggle:hover {
-            transform: scale(1.08);
-            box-shadow: 0 15px 40px rgba(255,152,0,0.6);
-        }
-        .admin-toggle.admin-active {
-            background: linear-gradient(45deg, #4CAF50, #66BB6A);
-        }
-        
-        header {
-            background: linear-gradient(135deg, #2d5a27, #4CAF50, #66BB6A);
-            color: white;
-            padding: 40px;
-            text-align: center;
-            border-radius: 30px;
-            margin-bottom: 40px;
-            box-shadow: 0 20px 50px rgba(45,90,39,0.4);
-        }
-        .shop-name {
-            font-size: 3.5em;
-            margin-bottom: 15px;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
-        }
-        .owner-name {
-            font-size: 1.6em;
-            opacity: 0.95;
-        }
-
-        .fab-container {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .fab {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            border: none;
-            font-size: 28px;
-            cursor: pointer;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: white;
-        }
-        .whatsapp-fab { 
-            background: linear-gradient(135deg, #25D366, #128C7E);
-            animation: pulse 2s infinite;
-            order: 2;
-        }
-        .call-fab { 
-            background: linear-gradient(135deg, #4CAF50, #45a049);
-            order: 1;
-        }
-        .fab:hover {
-            transform: scale(1.15) translateY(-5px);
-        }
-
-        /* Admin Panel - FIXED */
-        .admin-panel {
-            background: linear-gradient(135deg, #ff9800, #ff6b35, #ff5722);
-            color: white;
-            padding: 35px;
-            margin: 30px 0;
-            border-radius: 25px;
-            box-shadow: 0 20px 50px rgba(255,152,0,0.4);
-            border: 3px solid rgba(255,255,255,0.2);
-        }
-        .admin-panel h3 {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 2em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        .admin-row {
-            display: flex;
-            gap: 20px;
-            margin: 25px 0;
-            flex-wrap: wrap;
-            align-items: end;
-        }
-        .admin-panel input, .admin-panel select {
-            padding: 18px 20px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 15px;
-            flex: 1;
-            min-width: 200px;
-            font-size: 1.2em;
-            background: rgba(255,255,255,0.1);
-            color: white;
-            backdrop-filter: blur(10px);
-        }
-        .admin-panel input::placeholder {
-            color: rgba(255,255,255,0.7);
-        }
-        .admin-panel input:focus, .admin-panel select:focus {
-            outline: none;
-            border-color: #4CAF50;
-            box-shadow: 0 0 20px rgba(76,175,80,0.3);
-        }
-        .admin-btn {
-            background: linear-gradient(135deg, #2d5a27, #4CAF50);
-            color: white;
-            border: none;
-            padding: 18px 35px;
-            border-radius: 15px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1.2em;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .admin-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(45,90,39,0.4);
-        }
-        .success-msg {
-            background: linear-gradient(135deg, #4CAF50, #66BB6A);
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px 0;
-            text-align: center;
-            font-size: 1.3em;
-            font-weight: bold;
-            display: none;
-            box-shadow: 0 10px 30px rgba(76,175,80,0.3);
-            animation: bounce 0.6s ease;
-        }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-
-        .contact-info, .address {
-            padding: 35px;
-            margin: 35px 0;
-            border-radius: 30px;
-            text-align: center;
-            font-size: 1.6em;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-        }
-        .contact-info { 
-            background: linear-gradient(135deg, #4CAF50, #66BB6A, #81C784);
-        }
-        .address { 
-            background: linear-gradient(135deg, #2196F3, #42A5F5, #64B5F6);
-            color: white;
-        }
-
-        .fruits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
-        }
-        .fruit-card {
-            background: linear-gradient(145deg, #ffffff, #f8f9fa);
-            border-radius: 35px;
-            padding: 40px;
-            text-align: center;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.12);
-            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative;
-            overflow: hidden;
-            border: 5px solid transparent;
-            height: 580px;
-            display: flex;
-            flex-direction: column;
-        }
-        .fruit-card.available { 
-            border-image: linear-gradient(45deg, #4CAF50, #66BB6A) 1;
-            box-shadow: 0 25px 60px rgba(76,175,80,0.2);
-        }
-        .fruit-card.unavailable { 
-            opacity: 0.75; 
-            border-image: linear-gradient(45deg, #f44336, #ff5722) 1;
-        }
-        .fruit-card.unavailable::after {
-            content: 'OUT OF STOCK';
-            position: absolute;
-            top: 25px;
-            right: 25px;
-            background: linear-gradient(45deg, #f44336, #ff5722);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 30px;
-            font-size: 1.1em;
-            font-weight: bold;
-            box-shadow: 0 8px 25px rgba(244,67,54,0.4);
-            animation: blink 1.8s infinite;
-            z-index: 10;
-        }
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0.4; }
-        }
-        .fruit-image {
-            width: 220px;
-            height: 220px;
-            border-radius: 50%;
-            margin: 0 auto 30px;
-            background-size: cover;
-            background-position: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-            border: 10px solid white;
-            transition: all 0.5s;
-        }
-        .fruit-card.available .fruit-image {
-            box-shadow: 0 20px 50px rgba(76,175,80,0.3);
-        }
-        .fruit-card.unavailable .fruit-image {
-            filter: grayscale(80%) brightness(0.8);
-        }
-        .fruit-card:hover .fruit-image {
-            transform: scale(1.12) rotate(5deg);
-        }
-        .fruit-name {
-            font-size: 2.4em;
-            background: linear-gradient(45deg, #2d5a27, #4CAF50);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 25px;
-            font-weight: bold;
-        }
-        .fruit-desc {
-            color: #666;
-            margin-bottom: 25px;
-            font-size: 1.3em;
-            line-height: 1.5;
-        }
-        .price {
-            font-size: 2.5em;
-            font-weight: bold;
-            margin: 25px 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-        .fruit-card.available .price { 
-            background: linear-gradient(45deg, #4CAF50, #66BB6A);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .fruit-card.unavailable .price { 
-            color: #f44336; 
-            text-decoration: line-through;
-            font-size: 2em;
-        }
-        .stock-status {
-            font-size: 1.6em;
-            margin: 20px 0;
-            font-weight: bold;
-            padding: 15px;
-            border-radius: 25px;
-            background: rgba(255,255,255,0.8);
-        }
-        .available-status { 
-            color: #4CAF50;
-            background: rgba(76,175,80,0.2);
-        }
-        .unavailable-status { 
-            color: #f44336;
-            background: rgba(244,67,54,0.2);
-        }
-        .order-buttons {
-            margin-top: auto;
-            padding-top: 30px;
-        }
-        .order-btn, .whatsapp-btn {
-            padding: 20px 40px;
-            border: none;
-            border-radius: 40px;
-            cursor: pointer;
-            font-size: 1.3em;
-            font-weight: bold;
-            margin: 12px 0;
-            transition: all 0.4s;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            opacity: 0.7;
-            pointer-events: none;
-            width: 100%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        .fruit-card.available .order-btn,
-        .fruit-card.available .whatsapp-btn {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .order-btn {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
-            color: white;
-        }
-        .whatsapp-btn {
-            background: linear-gradient(135deg, #25D366, #128C7E);
-            color: white;
-        }
-        .order-btn:hover, .whatsapp-btn:hover {
-            transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-        }
-
-        .admin-controls {
-            margin-top: 25px;
-            padding-top: 25px;
-            border-top: 4px solid rgba(255,255,255,0.4);
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        .admin-controls button {
-            background: linear-gradient(135deg, #2196F3, #42A5F5);
-            color: white;
-            border: none;
-            padding: 15px 25px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 1.1em;
-            font-weight: bold;
-            flex: 1;
-            min-width: 140px;
-            transition: all 0.3s;
-        }
-        .admin-controls button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(33,150,243,0.4);
-        }
-
-        footer {
-            text-align: center;
-            padding: 60px 40px;
-            background: linear-gradient(135deg, #2d5a27, #4CAF50, #66BB6A);
-            color: white;
-            margin-top: 100px;
-            border-radius: 40px;
-            font-size: 1.5em;
-            box-shadow: 0 -20px 50px rgba(45,90,39,0.3);
-        }
-
-        @media (max-width: 768px) {
-            .fruits-grid { grid-template-columns: 1fr; }
-            .admin-row { flex-direction: column; align-items: stretch; }
-            .admin-controls { flex-direction: column; }
-            .shop-name { font-size: 2.8em; }
-            .fruit-card { height: auto; min-height: 550px; }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fad0c4 100%); }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .admin-lock { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.95); z-index: 9999; display: none; align-items: center; justify-content: center; flex-direction: column; color: white; }
+        .admin-lock.active { display: flex !important; }
+        .admin-lock h2 { color: #4CAF50; margin-bottom: 20px; font-size: 2.5em; text-align: center; }
+        .admin-lock input { padding: 20px 30px; font-size: 1.5em; border: 3px solid #4CAF50; border-radius: 15px; width: 400px; max-width: 90vw; margin-bottom: 25px; text-align: center; }
+        .admin-lock button { background: linear-gradient(45deg, #4CAF50, #66BB6A); color: white; border: none; padding: 20px 40px; border-radius: 15px; cursor: pointer; font-size: 1.3em; }
+        .admin-toggle { position: fixed; top: 25px; right: 25px; background: linear-gradient(45deg, #ff9800, #ff6b35); color: white; border: none; padding: 18px 28px; border-radius: 35px; cursor: pointer; z-index: 10000; font-size: 1.1em; }
+        header { background: linear-gradient(135deg, #2d5a27, #4CAF50, #66BB6A); color: white; padding: 40px; text-align: center; border-radius: 30px; margin-bottom: 40px; }
+        .shop-name { font-size: 3.5em; margin-bottom: 15px; }
+        .owner-name { font-size: 1.6em; }
+        .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 1000; display: flex; flex-direction: column; gap: 15px; }
+        .fab { width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; color: white; font-size: 28px; }
+        .whatsapp-fab { background: linear-gradient(135deg, #25D366, #128C7E); }
+        .call-fab { background: linear-gradient(135deg, #4CAF50, #45a049); }
+        .admin-panel { background: linear-gradient(135deg, #ff9800, #ff6b35, #ff5722); color: white; padding: 35px; margin: 30px 0; border-radius: 25px; }
+        .admin-row { display: flex; gap: 20px; margin: 25px 0; flex-wrap: wrap; align-items: end; }
+        .admin-panel input, .admin-panel select { padding: 18px 20px; border-radius: 15px; flex: 1; min-width: 200px; font-size: 1.2em; background: rgba(255,255,255,0.1); color: white; border: 2px solid rgba(255,255,255,0.3); }
+        .admin-btn { background: linear-gradient(135deg, #2d5a27, #4CAF50); color: white; border: none; padding: 18px 35px; border-radius: 15px; cursor: pointer; font-size: 1.2em; }
+        .success-msg { background: linear-gradient(135deg, #4CAF50, #66BB6A); color: white; padding: 20px; border-radius: 15px; margin: 20px 0; text-align: center; display: none; }
+        .contact-info, .address { padding: 35px; margin: 35px 0; border-radius: 30px; text-align: center; font-size: 1.6em; }
+        .contact-info { background: linear-gradient(135deg, #4CAF50, #66BB6A); }
+        .address { background: linear-gradient(135deg, #2196F3, #42A5F5); color: white; }
+        .fruits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px; margin-top: 60px; }
+        .fruit-card { background: white; border-radius: 35px; padding: 40px; text-align: center; box-shadow: 0 25px 60px rgba(0,0,0,0.12); position: relative; border: 5px solid transparent; }
+        .fruit-card.available { border-image: linear-gradient(45deg, #4CAF50, #66BB6A) 1; }
+        .fruit-card.unavailable { opacity: 0.75; border-image: linear-gradient(45deg, #f44336, #ff5722) 1; }
+        .fruit-card.unavailable::after { content: 'OUT OF STOCK'; position: absolute; top: 25px; right: 25px; background: #f44336; color: white; padding: 12px 25px; border-radius: 30px; }
+        .fruit-image { width: 220px; height: 220px; border-radius: 50%; margin: 0 auto 30px; background-size: cover; background-position: center; border: 10px solid white; }
+        .fruit-name { font-size: 2.4em; background: linear-gradient(45deg, #2d5a27, #4CAF50); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .price { font-size: 2.5em; font-weight: bold; margin: 25px 0; }
+        .fruit-card.available .price { background: linear-gradient(45deg, #4CAF50, #66BB6A); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .fruit-card.unavailable .price { color: #f44336; text-decoration: line-through; }
+        .stock-status { font-size: 1.6em; margin: 20px 0; padding: 15px; border-radius: 25px; }
+        .available-status { color: #4CAF50; background: rgba(76,175,80,0.2); }
+        .unavailable-status { color: #f44336; background: rgba(244,67,54,0.2); }
+        .order-btn, .whatsapp-btn { padding: 20px 40px; border: none; border-radius: 40px; font-size: 1.3em; margin: 12px 0; width: 100%; opacity: 0.7; pointer-events: none; }
+        .fruit-card.available .order-btn, .fruit-card.available .whatsapp-btn { opacity: 1; pointer-events: all; }
+        .order-btn { background: #ff6b6b; color: white; }
+        .whatsapp-btn { background: #25D366; color: white; }
+        footer { text-align: center; padding: 60px 40px; background: linear-gradient(135deg, #2d5a27, #4CAF50); color: white; margin-top: 100px; border-radius: 40px; }
+        @media (max-width: 768px) { .fruits-grid { grid-template-columns: 1fr; } .admin-row { flex-direction: column; } }
     </style>
 </head>
 <body>
-    <!-- Admin Lock Overlay -->
     <div class="admin-lock" id="adminLock">
         <h2><i class="fas fa-key"></i> Admin Control Panel</h2>
-        <p style="font-size: 1.3em; margin-bottom: 30px; text-align: center;">
-            Enter Password to Manage Stock & Prices
-        </p>
-        <input type="password" id="adminPassword" placeholder="Enter Admin Password" autocomplete="off">
-        <button onclick="checkAdminPassword()">
-            <i class="fas fa-unlock"></i> Unlock Admin
-        </button>
-        <p style="margin-top: 20px; font-size: 1.1em; opacity: 0.8;">Default: saifi123</p>
+        <p style="font-size: 1.3em; margin-bottom: 30px;">Enter Password to Manage Stock & Prices</p>
+        <input type="password" id="adminPassword" placeholder="Enter Admin Password">
+        <button onclick="checkAdminPassword()"><i class="fas fa-unlock"></i> Unlock Admin</button>
+        <p style="margin-top: 20px;">Default: saifi123</p>
     </div>
 
-    <!-- Admin Toggle Button -->
-    <button class="admin-toggle" id="adminToggle">
-        <i class="fas fa-cogs"></i> Admin
-    </button>
+    <button class="admin-toggle" id="adminToggle"><i class="fas fa-cogs"></i> Admin</button>
 
     <div class="container">
         <header>
@@ -473,64 +68,41 @@
             <p class="owner-name" id="ownerName">Shop Owner: Mohammad Gouseuddin</p>
         </header>
 
-        <!-- Admin Panel -->
-        <div class="admin-panel" id="adminPanel">
+        <div class="admin-panel" id="adminPanel" style="display: none;">
             <h3><i class="fas fa-tools"></i> Stock & Price Management</h3>
             <div class="success-msg" id="successMsg"></div>
-            
             <div class="admin-row">
-                <input type="text" id="fruitNameInput" placeholder="Fruit Name (Apple)" autocomplete="off">
+                <input type="text" id="fruitNameInput" placeholder="Fruit Name (Apple)">
                 <input type="text" id="newPriceInput" placeholder="New Price ₹150/kg">
                 <select id="stockStatus">
                     <option value="available">✅ In Stock</option>
                     <option value="unavailable">❌ Out of Stock</option>
                 </select>
-                <button class="admin-btn" onclick="updateStock()">
-                    <i class="fas fa-save"></i> Update Now
-                </button>
+                <button class="admin-btn" onclick="updateStock()"><i class="fas fa-save"></i> Update Now</button>
             </div>
-
             <div style="text-align: center; margin-top: 20px;">
-                <input type="text" id="newOwnerInput" placeholder="New Owner Name" style="width: 300px; padding: 15px; border-radius: 10px; border: none;">
-                <button class="admin-btn" onclick="updateOwner()" style="margin-left: 15px;">
-                    Update Owner
-                </button>
+                <input type="text" id="newOwnerInput" placeholder="New Owner Name" style="width: 300px; padding: 15px; border-radius: 10px;">
+                <button class="admin-btn" onclick="updateOwner()">Update Owner</button>
             </div>
         </div>
 
-        <div class="contact-info">
-            📞 <a href="tel:+917893216287"><i class="fas fa-phone-volume"></i> 7893216287</a>
-        </div>
-
-        <div class="address">
-            📍 <i class="fas fa-map-marker-alt"></i> MM Pahadi Road, Chintalmet Suleman Nagar, Hyderabad
-        </div>
+        <div class="contact-info">📞 <a href="tel:+917893216287" style="color:white; text-decoration:none;"><i class="fas fa-phone-volume"></i> 7893216287</a></div>
+        <div class="address">📍 <i class="fas fa-map-marker-alt"></i> MM Pahadi Road, Chintalmet Suleman Nagar, Hyderabad</div>
 
         <section class="fruits-section">
-            <h2 style="text-align: center; font-size: 3.5em; color: #2d5a27; margin-bottom: 60px; text-shadow: 3px 3px 6px rgba(0,0,0,0.2);">
-                <i class="fas fa-fruit-apple"></i> Fresh Premium Fruits
-            </h2>
+            <h2 style="text-align: center; font-size: 3.5em; color: #2d5a27;"><i class="fas fa-fruit-apple"></i> Fresh Premium Fruits</h2>
             <div class="fruits-grid" id="fruitsGrid"></div>
         </section>
 
-        <footer>
-            <p><i class="fas fa-crown"></i> Saifi Fruit Merchant | Hyderabad's No.1 Fruit Shop 
-            <br><i class="fas fa-star"></i> 100% Fresh • Daily Supply • Best Prices</p>
-        </footer>
+        <footer><p><i class="fas fa-crown"></i> Saifi Fruit Merchant | Hyderabad's No.1 Fruit Shop <br><i class="fas fa-star"></i> 100% Fresh • Daily Supply • Best Prices</p></footer>
     </div>
 
     <div class="fab-container">
-        <a href="https://wa.me/917893216287?text=Hi%20Saifi%20Fruits!%20Show%20me%20today's%20available%20fruits" 
-           class="fab whatsapp-fab" target="_blank" title="WhatsApp Order">
-            <i class="fab fa-whatsapp"></i>
-        </a>
-        <a href="tel:+917893216287" class="fab call-fab" title="Call Now">
-            <i class="fas fa-phone"></i>
-        </a>
+        <a href="https://wa.me/917893216287?text=Hi%20Saifi%20Fruits!%20Show%20me%20today's%20available%20fruits" class="fab whatsapp-fab" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="tel:+917893216287" class="fab call-fab"><i class="fas fa-phone"></i></a>
     </div>
 
     <script>
-        // FIXED - All functions working perfectly
         const ADMIN_PASSWORD = "saifi123";
         
         let fruits = [
@@ -546,6 +118,104 @@
             { name: "Sapota", img: "https://images.unsplash.com/photo-1628258334165-4bfec0d298b9?w=300&h=300&fit=crop", desc: "Chikoo", price: "₹100/kg", stock: "available" },
             { name: "Litchi", img: "https://images.unsplash.com/photo-1588880324632-468d2d2be8e4?w=300&h=300&fit=crop", desc: "Fresh Litchi", price: "₹300/kg", stock: "unavailable" },
             { name: "Jamun", img: "https://images.unsplash.com/photo-1564642228123-6db5a766e4c5?w=300&h=300&fit=crop", desc: "Black Jamun", price: "₹80/kg", stock: "available" },
-            { name: "Strawberry", img: "https://images.unsplash.com/photo-1542793574-70f28a7e2c60?w=300&h=300&fit=crop", desc: "Mahabaleshwar", price: "₹400/kg", stock: "unavailable" },
-            { name: "Kiwi", img: "https://images.unsplash.com/photo-1541633216434-6bc316fb38bb?w=300&h=300&fit=crop", desc: "Green Kiwi", price: "₹350/kg", stock: "available" },
-            { name: "Pineapple
+            { name: "Pineapple", img: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=300&h=300&fit=crop", desc: "Fresh Pineapple", price: "₹80/kg", stock: "available" },
+            { name: "Strawberry", img: "https://images.unsplash.com/photo-1542793574-70f28a7e2c60?w=300&h=300&fit=crop", desc: "Mahabaleshwar Strawberry", price: "₹400/kg", stock: "unavailable" },
+            { name: "Kiwi", img: "https://images.unsplash.com/photo-1541633216434-6bc316fb38bb?w=300&h=300&fit=crop", desc: "Green Kiwi", price: "₹350/kg", stock: "available" }
+        ];
+
+        function renderFruits() {
+            const grid = document.getElementById('fruitsGrid');
+            if(!grid) return;
+            grid.innerHTML = fruits.map(fruit => `
+                <div class="fruit-card ${fruit.stock}">
+                    <div class="fruit-image" style="background-image: url('${fruit.img}')"></div>
+                    <h2 class="fruit-name">${fruit.name}</h2>
+                    <p class="fruit-desc">${fruit.desc}</p>
+                    <div class="price">${fruit.price}</div>
+                    <div class="stock-status ${fruit.stock === 'available' ? 'available-status' : 'unavailable-status'}">
+                        ${fruit.stock === 'available' ? '✅ In Stock' : '❌ Out of Stock'}
+                    </div>
+                    <div class="order-buttons">
+                        <button class="order-btn" onclick="orderNow('${fruit.name}')">📞 Order Now</button>
+                        <button class="whatsapp-btn" onclick="whatsappOrder('${fruit.name}')">💬 WhatsApp Order</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function orderNow(fruitName) {
+            alert(`✅ Order for ${fruitName} placed! Call us on 7893216287 to confirm.`);
+        }
+
+        function whatsappOrder(fruitName) {
+            window.open(`https://wa.me/917893216287?text=Hi! I want to order ${fruitName} from Saifi Fruits.`, '_blank');
+        }
+
+        function updateStock() {
+            const name = document.getElementById('fruitNameInput')?.value;
+            const price = document.getElementById('newPriceInput')?.value;
+            const stock = document.getElementById('stockStatus')?.value;
+            const fruit = fruits.find(f => f.name.toLowerCase() === name?.toLowerCase());
+            if(fruit) {
+                if(price) fruit.price = price;
+                if(stock) fruit.stock = stock;
+                renderFruits();
+                const msg = document.getElementById('successMsg');
+                if(msg) { 
+                    msg.style.display = 'block'; 
+                    msg.innerText = `✅ ${fruit.name} updated successfully!`; 
+                    setTimeout(() => msg.style.display = 'none', 3000); 
+                }
+                document.getElementById('fruitNameInput').value = '';
+                document.getElementById('newPriceInput').value = '';
+            } else {
+                alert('❌ Fruit not found! Check spelling (First letter capital).');
+            }
+        }
+
+        function updateOwner() {
+            const newOwner = document.getElementById('newOwnerInput')?.value;
+            if(newOwner) {
+                const ownerSpan = document.getElementById('ownerName');
+                if(ownerSpan) ownerSpan.innerHTML = `Shop Owner: ${newOwner}`;
+                alert(`✅ Owner changed to ${newOwner}`);
+                document.getElementById('newOwnerInput').value = '';
+            } else {
+                alert('Please enter owner name');
+            }
+        }
+
+        function checkAdminPassword() {
+            const pwd = document.getElementById('adminPassword')?.value;
+            if(pwd === ADMIN_PASSWORD) {
+                document.getElementById('adminLock')?.classList.remove('active');
+                localStorage.setItem('adminLoggedIn', 'true');
+                document.getElementById('adminPanel').style.display = 'block';
+                alert('✅ Access Granted! Welcome Admin.');
+                document.getElementById('adminPassword').value = '';
+            } else {
+                alert('❌ Wrong Password!');
+            }
+        }
+
+        // Admin toggle button logic
+        document.getElementById('adminToggle')?.addEventListener('click', () => {
+            if(localStorage.getItem('adminLoggedIn') === 'true') {
+                const panel = document.getElementById('adminPanel');
+                if(panel) panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+            } else {
+                document.getElementById('adminLock')?.classList.add('active');
+            }
+        });
+
+        // Close lock if already logged in
+        window.onload = () => {
+            renderFruits();
+            if(localStorage.getItem('adminLoggedIn') === 'true') {
+                document.getElementById('adminLock')?.classList.remove('active');
+                document.getElementById('adminPanel').style.display = 'block';
+            }
+        };
+    </script>
+</body>
+</html>
